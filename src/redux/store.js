@@ -1,6 +1,5 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import initialState from './initialState';
 import tablesReducer from './tablesRedux';
 
 const subreducers = {
@@ -10,7 +9,7 @@ const subreducers = {
 const reducer = combineReducers(subreducers);
 const store = createStore(
   reducer,
-  initialState,
+  applyMiddleware(thunk),
 
   compose(
     applyMiddleware(thunk),
