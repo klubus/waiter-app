@@ -7,16 +7,8 @@ const subreducers = {
 };
 
 const reducer = combineReducers(subreducers);
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk),
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__
-      ? window.__REDUX_DEVTOOLS_EXTENSION__()
-      : (f) => f
-  )
-);
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 export default store;
