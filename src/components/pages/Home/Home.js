@@ -1,5 +1,7 @@
+import AllTables from '../AllTables/AllTables';
+
 const Home = () => {
-  return <div>Home</div>;
+  return <AllTables />;
 };
 
 export default Home;
