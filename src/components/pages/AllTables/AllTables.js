@@ -9,7 +9,7 @@ const AllTables = () => {
     <section>
       <h2>All Tables</h2>
       {categories.map((cat) => (
-        <TableRow id={cat.id} status={cat.status} />
+        <TableRow key={cat.id} id={cat.id} status={cat.status} />
       ))}
     </section>
   );

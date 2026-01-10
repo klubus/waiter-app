@@ -7,7 +7,7 @@ const NavBar = () => {
   return (
     <Navbar bg="primary" data-bs-theme="dark" className="rounded my-3">
       <Container>
-        <Navbar.Brand href="#home">Waiter.app</Navbar.Brand>
+        <Navbar.Brand href="/">Waiter.app</Navbar.Brand>
         <Nav className="ms-auto">
           <Nav.Link as={NavLink} to="/">
             Home
