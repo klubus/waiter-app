@@ -1,3 +1,5 @@
+import { API_URL } from '../config';
+
 //selectors
 export const getAllTables = ({ tables }) => tables;
 export const getTableById = ({ tables }, tableId) =>
@@ -16,7 +18,7 @@ export const loadTables = (payload) => ({
 });
 
 export const updateTable = (payload) => ({ type: UPDATE_TABLE, payload });
-export const addTable = (payload) => ({ type: ADD_TABLE, payload});
+export const addTable = (payload) => ({ type: ADD_TABLE, payload });
 export const deleteTable = (tableId) => ({
   type: REMOVE_TABLE,
   payload: tableId,
@@ -25,7 +27,7 @@ export const deleteTable = (tableId) => ({
 // thunk
 export const fetchTables = () => {
   return (dispatch) => {
-    fetch('http://localhost:3131/api/tables')
+    fetch(`${API_URL}/tables`)
       .then((res) => res.json())
       .then((tables) => dispatch(loadTables(tables)));
   };
@@ -43,7 +45,7 @@ const tablesReducer = (statePart = [], action) => {
     case REMOVE_TABLE:
       return statePart.filter((table) => table.id !== action.payload);
     case ADD_TABLE:
-      return [...statePart, { ...action.payload}];
+      return [...statePart, { ...action.payload }];
     default:
       return statePart;
   }
