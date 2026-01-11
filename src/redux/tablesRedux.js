@@ -7,6 +7,7 @@ export const getTableById = ({ tables }, tableId) =>
 const createActionName = (actionName) => `app/tables/${actionName}`;
 const LOAD_TABLES = createActionName('LOAD_TABLES');
 const UPDATE_TABLE = createActionName('UPDATE_TABLE');
+const REMOVE_TABLE = createActionName('REMOVE_TABLE');
 
 export const loadTables = (payload) => ({
   type: LOAD_TABLES,
@@ -14,6 +15,11 @@ export const loadTables = (payload) => ({
 });
 
 export const updateTable = (payload) => ({ type: UPDATE_TABLE, payload });
+
+export const deleteTable = (tableId) => ({
+  type: REMOVE_TABLE,
+  payload: tableId,
+});
 
 // thunk
 export const fetchTables = () => {
@@ -33,6 +39,8 @@ const tablesReducer = (statePart = [], action) => {
       return statePart.map((table) =>
         table.id === action.payload.id ? { ...table, ...action.payload } : table
       );
+    case REMOVE_TABLE:
+      return statePart.filter((table) => table.id !== action.payload);
     default:
       return statePart;
   }
