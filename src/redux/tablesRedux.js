@@ -6,11 +6,14 @@ export const getTableById = ({ tables }, tableId) =>
 // actions
 const createActionName = (actionName) => `app/tables/${actionName}`;
 const LOAD_TABLES = createActionName('LOAD_TABLES');
+const UPDATE_TABLE = createActionName('UPDATE_TABLE');
 
 export const loadTables = (payload) => ({
   type: LOAD_TABLES,
   payload,
 });
+
+export const updateTable = (payload) => ({ type: UPDATE_TABLE, payload });
 
 // thunk
 export const fetchTables = () => {
@@ -26,6 +29,10 @@ const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
     case LOAD_TABLES:
       return action.payload;
+    case UPDATE_TABLE:
+      return statePart.map((table) =>
+        table.id === action.payload.id ? { ...table, ...action.payload } : table
+      );
     default:
       return statePart;
   }

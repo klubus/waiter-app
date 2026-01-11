@@ -2,14 +2,16 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
-import { getAllTables, getTableById } from '../../../redux/tablesRedux';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { useEffect } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { useParams } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  getAllTables,
+  getTableById,
+  updateTable,
+} from '../../../redux/tablesRedux';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SingleTable = () => {
@@ -22,7 +24,9 @@ const SingleTable = () => {
     table?.maxPeopleAmount
   );
   const [bill, setBill] = useState(table?.bill);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSelect = (eventKey) => {
     setStatus(eventKey);
@@ -68,6 +72,18 @@ const SingleTable = () => {
       navigate('/');
     }
   }, [id, navigate, tables]);
+
+  function handleSubmit() {
+    const updatedTable = {
+      ...table,
+      status,
+      peopleAmount: Number(peopleAmount),
+      maxPeopleAmount: Number(maxPeopleAmount),
+      bill: Number(bill),
+    };
+    dispatch(updateTable(updatedTable));
+    navigate('/');
+  }
 
   return (
     <Container>
@@ -152,7 +168,7 @@ const SingleTable = () => {
           </Col>
         )}
         <Col className="mt-4">
-          <Button as={Link} to={`/table/${id}`} variant="primary">
+          <Button variant="primary" onClick={handleSubmit}>
             Update
           </Button>
         </Col>
