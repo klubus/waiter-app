@@ -8,6 +8,7 @@ const createActionName = (actionName) => `app/tables/${actionName}`;
 const LOAD_TABLES = createActionName('LOAD_TABLES');
 const UPDATE_TABLE = createActionName('UPDATE_TABLE');
 const REMOVE_TABLE = createActionName('REMOVE_TABLE');
+const ADD_TABLE = createActionName('ADD_TABLE');
 
 export const loadTables = (payload) => ({
   type: LOAD_TABLES,
@@ -15,7 +16,7 @@ export const loadTables = (payload) => ({
 });
 
 export const updateTable = (payload) => ({ type: UPDATE_TABLE, payload });
-
+export const addTable = (payload) => ({ type: ADD_TABLE, payload});
 export const deleteTable = (tableId) => ({
   type: REMOVE_TABLE,
   payload: tableId,
@@ -41,6 +42,8 @@ const tablesReducer = (statePart = [], action) => {
       );
     case REMOVE_TABLE:
       return statePart.filter((table) => table.id !== action.payload);
+    case ADD_TABLE:
+      return [...statePart, { ...action.payload}];
     default:
       return statePart;
   }
